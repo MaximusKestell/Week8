@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+<!--    vue will manage all the html here-->
+
+    <h1>Hello Vue!</h1>
+
+    <p>{{ messagaeWithExclamationPoints }}</p>
+
+    <button v-on:click="addExclamationPoints">Add Exclamation Points</button>
+
+    <button v-on:click="clearExclamationPoints">Clear</button>
+
+</div>
+
+<script>
+    // setup vue app
+
+    const { createApp, ref, computed } = Vue
+
+    createApp({
+        setup() { // function def
+            // define things vue app needs here.
+
+            const message = ref('Hi!')
+            const numberOfExclamationPoints = ref(1)
+
+            function addExclamationPoints() {
+                if(numberOfExclamationPoints.value < 10) {
+                    // message.value = message.value + '!'
+                    numberOfExclamationPoints.value ++
+                } else {
+                    alert('No more')
+                }
+            }
+
+            function clearExclamationPoints() {
+                numberOfExclamationPoints.value = 0
+                message.value = 'Hi!'
+            }
+
+            const messagaeWithExclamationPoints = computed( function() {
+                let computedMessage = message.value
+                // add ! based on numberOfExclamationPoints
+                for (let x = 0; x < numberOfExclamationPoints.value; x++) {
+                    computedMessage = computedMessage + '!'
+                }
+                return computedMessage
+            })
+
+            return {
+                message,
+                numberOfExclamationPoints,
+                messagaeWithExclamationPoints,
+                addExclamationPoints,
+                clearExclamationPoints
+            }
+        }
+    }).mount('#app') // means we create app, mount connects vue app with html.
+    // vue code reads html n works w it as app runs
+
+
+</script>
+
+</body>
+</html>
